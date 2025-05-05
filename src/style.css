@@ -1,4 +1,4 @@
-/* Фон */
+/* Общий фон и стили */
 body {
    font-family: Arial, sans-serif;
    text-align: center;
@@ -16,17 +16,12 @@ body {
    padding: 20px;
 }
 
-.logo {
-   width: 50px;
-   height: 50px;
-   margin-right: 10px;
-}
-
 h1 {
    font-size: 30px;
+   margin: 0;
 }
 
-/* Игроки */
+/* Блок игроков */
 .players-container {
    display: flex;
    justify-content: center;
@@ -35,17 +30,31 @@ h1 {
 }
 
 .player {
-   font-size: 20px;
+   font-size: 18px;
    font-weight: bold;
    padding: 10px;
    border-radius: 8px;
    background: rgba(255, 255, 255, 0.2);
+   display: flex;
+   align-items: center;
+   gap: 10px;
 }
 
 .player.active {
    background: rgba(255, 255, 255, 0.5);
-   font-size: 22px;
+   font-size: 20px;
    color: yellow;
+}
+
+/* Поле ввода имени */
+.player-name {
+   width: 120px;
+   font-size: 16px;
+   text-align: center;
+   border: none;
+   background: transparent;
+   color: white;
+   font-weight: bold;
 }
 
 /* Игровое поле */
@@ -72,38 +81,59 @@ button:hover {
    background: #e0e0e0;
 }
 
-/* Лог игры */
+/* Журнал ходов */
 #log {
    margin-top: 20px;
    padding: 15px;
    background: rgba(255, 255, 255, 0.2);
    border-radius: 8px;
    width: 320px;
+   max-width: 90%;
    text-align: center;
    margin-left: auto;
    margin-right: auto;
+   font-size: 16px;
+   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Добавляем тень */
+   transition: opacity 0.3s ease-in-out; /* Анимация проявления */
 }
 
-/* Победитель */
-.winner {
-   font-size: 24px;
-   font-weight: bold;
-   color: #ffcc00;
-   margin-top: 15px;
+#log h3 {
+   margin-bottom: 10px;
+   color: yellow;
+   font-size: 18px;
 }
 
-/* Кнопка сброса */
+#log ol {
+   list-style: none;
+   padding: 0;
+}
+
+#log li {
+   padding: 5px;
+   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+   transition: background 0.2s;
+}
+
+#log li:hover {
+   background: rgba(255, 255, 255, 0.1); /* Подсветка при наведении */
+}
+
 .reset-btn {
-   font-size: 20px;
-   padding: 10px 20px;
+   font-size: 16px; /* Уменьшаем текст */
+   padding: 12px 24px; /* Делаем кнопку удобнее */
    border: none;
    cursor: pointer;
    border-radius: 5px;
    background: yellow;
    color: black;
-   margin-top: 15px;
+   margin-top: 30px; /* Увеличиваем отступ вниз */
+   display: block;
+   width: fit-content;
+   margin-left: auto;
+   margin-right: auto;
 }
 
 .reset-btn:hover {
    background: orange;
+   transform: scale(1.05);
 }

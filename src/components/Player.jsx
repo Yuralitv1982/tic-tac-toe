@@ -1,7 +1,13 @@
-export default function Player({ initialName, symbol, isActive }) {
+export default function Player({ name, symbol, isActive, onChangeName }) {
    return (
       <div className={`player ${isActive ? 'active' : ''}`}>
-         {initialName} ({symbol})
+         <input
+            type='text'
+            value={name}
+            onChange={(e) => onChangeName(symbol, e.target.value)}
+            className='player-name'
+         />
+         ({symbol})
       </div>
    );
 }

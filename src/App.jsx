@@ -7,28 +7,18 @@ function App() {
    const [gameTurns, setGameTurns] = useState([]);
    const [activePlayer, setActivePlayer] = useState('X');
    const [winner, setWinner] = useState(null);
+   const [playerNames, setPlayerNames] = useState({
+      X: 'Игрок 1',
+      O: 'Игрок 2',
+   });
 
-   function handleSelectSquare(rowIndex, colIndex) {
-      if (winner) return;
-
-      setGameTurns((prevTurns) => [
-         { square: { row: rowIndex, col: colIndex }, player: activePlayer },
-         ...prevTurns,
-      ]);
-
-      setActivePlayer((prev) => (prev === 'X' ? 'O' : 'X'));
-   }
-
-   function resetGame() {
-      setGameTurns([]);
-      setActivePlayer('X');
-      setWinner(null);
+   function handleChangeName(player, newName) {
+      setPlayerNames((prevNames) => ({ ...prevNames, [player]: newName }));
    }
 
    return (
       <div className='app'>
          <header className='header'>
-            <img src='/logo.png' alt='Логотип' className='logo' />
             <h1>Tic-Tac-Toe</h1>
          </header>
 
@@ -36,14 +26,16 @@ function App() {
             <div id='game-container'>
                <div className='players-container'>
                   <Player
-                     initialName='Игрок 1'
+                     name={playerNames.X}
                      symbol='X'
                      isActive={activePlayer === 'X'}
+                     onChangeName={handleChangeName}
                   />
                   <Player
-                     initialName='Игрок 2'
+                     name={playerNames.O}
                      symbol='O'
                      isActive={activePlayer === 'O'}
+                     onChangeName={handleChangeName}
                   />
                </div>
 
@@ -55,7 +47,6 @@ function App() {
             </div>
 
             {winner && <h2 className='winner'>Победитель: {winner}</h2>}
-
             <button className='reset-btn' onClick={resetGame}>
                Начать заново
             </button>
@@ -63,5 +54,3 @@ function App() {
       </div>
    );
 }
-
-export default App;
