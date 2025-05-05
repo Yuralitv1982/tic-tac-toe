@@ -1,52 +1,67 @@
-import { useState } from 'react'; // Импортируем `useState`, чтобы управлять состоянием
-
-import GameBoard from './components/GameBoard'; // Игровое поле
-import Player from './components/Player'; // Компонент игрока
-import Log from './components/Log'; // Журнал ходов
+import { useState } from 'react';
+import GameBoard from './components/GameBoard';
+import Player from './components/Player';
+import Log from './components/Log';
 
 function App() {
-   // Создаём состояние для хранения истории ходов
    const [gameTurns, setGameTurns] = useState([]);
-   // Создаём состояние для отслеживания текущего игрока (`X` или `O`)
    const [activePlayer, setActivePlayer] = useState('X');
+   const [winner, setWinner] = useState(null);
 
-   // Функция обработки клика по клетке игрового поля
    function handleSelectSquare(rowIndex, colIndex) {
-      // Добавляем новый ход в массив `gameTurns`
+      if (winner) return;
+
       setGameTurns((prevTurns) => [
          { square: { row: rowIndex, col: colIndex }, player: activePlayer },
          ...prevTurns,
       ]);
 
-      // Меняем активного игрока на противоположного (`X` → `O`, `O` → `X`)
       setActivePlayer((prev) => (prev === 'X' ? 'O' : 'X'));
    }
 
+   function resetGame() {
+      setGameTurns([]);
+      setActivePlayer('X');
+      setWinner(null);
+   }
+
    return (
-      <main>
-         <div id='game-container'>
-            {/* Отображение игроков */}
-            <ol id='players'>
-               <Player
-                  initialName='Игрок 1'
-                  symbol='X'
-                  isActive={activePlayer === 'X'}
-               />
-               <Player
-                  initialName='Игрок 2'
-                  symbol='O'
-                  isActive={activePlayer === 'O'}
-               />
-            </ol>
+      <div className='app'>
+         <header className='header'>
+            <img src='/logo.png' alt='Логотип' className='logo' />
+            <h1>Tic-Tac-Toe</h1>
+         </header>
 
-            {/* Игровое поле с переданной функцией обработки кликов */}
-            <GameBoard onSelectSquare={handleSelectSquare} turns={gameTurns} />
-         </div>
+         <main>
+            <div id='game-container'>
+               <div className='players-container'>
+                  <Player
+                     initialName='Игрок 1'
+                     symbol='X'
+                     isActive={activePlayer === 'X'}
+                  />
+                  <Player
+                     initialName='Игрок 2'
+                     symbol='O'
+                     isActive={activePlayer === 'O'}
+                  />
+               </div>
 
-         {/* Журнал ходов */}
-         <Log turns={gameTurns} />
-      </main>
+               <GameBoard
+                  onSelectSquare={handleSelectSquare}
+                  turns={gameTurns}
+               />
+               <Log turns={gameTurns} />
+            </div>
+
+            {winner && <h2 className='winner'>Победитель: {winner}</h2>}
+
+            <button className='reset-btn' onClick={resetGame}>
+               Начать заново
+            </button>
+         </main>
+      </div>
    );
 }
 
-export default App; // Экспортируем компонент `App` для использования в `index.js`
+export default App;
