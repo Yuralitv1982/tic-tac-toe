@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react'; // Импортируем `useState`, чтобы управлять состоянием
+
+import GameBoard from './components/GameBoard'; // Игровое поле
+import Player from './components/Player'; // Компонент игрока
+import Log from './components/Log'; // Журнал ходов
 
 function App() {
-  const [count, setCount] = useState(0)
+   // Создаём состояние для хранения истории ходов
+   const [gameTurns, setGameTurns] = useState([]);
+   // Создаём состояние для отслеживания текущего игрока (`X` или `O`)
+   const [activePlayer, setActivePlayer] = useState('X');
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+   // Функция обработки клика по клетке игрового поля
+   function handleSelectSquare(rowIndex, colIndex) {
+      // Добавляем новый ход в массив `gameTurns`
+      setGameTurns((prevTurns) => [
+         { square: { row: rowIndex, col: colIndex }, player: activePlayer },
+         ...prevTurns,
+      ]);
+
+      // Меняем активного игрока на противоположного (`X` → `O`, `O` → `X`)
+      setActivePlayer((prev) => (prev === 'X' ? 'O' : 'X'));
+   }
+
+   return (
+      <main>
+         <div id='game-container'>
+            {/* Отображение игроков */}
+            <ol id='players'>
+               <Player
+                  initialName='Игрок 1'
+                  symbol='X'
+                  isActive={activePlayer === 'X'}
+               />
+               <Player
+                  initialName='Игрок 2'
+                  symbol='O'
+                  isActive={activePlayer === 'O'}
+               />
+            </ol>
+
+            {/* Игровое поле с переданной функцией обработки кликов */}
+            <GameBoard onSelectSquare={handleSelectSquare} turns={gameTurns} />
+         </div>
+
+         {/* Журнал ходов */}
+         <Log turns={gameTurns} />
+      </main>
+   );
 }
 
-export default App
+export default App; // Экспортируем компонент `App` для использования в `index.js`
