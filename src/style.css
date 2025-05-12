@@ -137,3 +137,17 @@ button:hover {
    background: orange;
    transform: scale(1.05);
 }
+
+.game-over {
+   margin-top: 30px;
+   padding: 20px;
+   background: rgba(255, 255, 255, 0.2);
+   border-radius: 8px;
+   text-align: center;
+   font-size: 20px;
+   font-weight: bold;
+}
+
+.game-over h2 {
+   color: yellow;
+}

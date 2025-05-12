@@ -36,3 +36,9 @@ export default function GameBoard({ onSelectSquare, turns }) {
       </div>
    );
 }
+
+// Что делает этот компонент?
+//  ✔ Генерирует игровое поле (3x3).
+//  ✔ Обновляет состояние поля при каждом ходе игрока (useEffect).
+//  ✔ Отображает символ X или O вместо пустых клеток.
+//  ✔ Вызывает onSelectSquare(rowIndex, colIndex), когда нажимают кнопку.

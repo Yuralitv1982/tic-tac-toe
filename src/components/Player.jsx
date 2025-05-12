@@ -11,3 +11,8 @@ export default function Player({ name, symbol, isActive, onChangeName }) {
       </div>
    );
 }
+
+// Что делает этот компонент?
+// ✔ Отображает имя игрока (<input>), чтобы его можно было изменить.
+// ✔ Меняет имя игрока в реальном времени (onChangeName).
+// ✔ Подсвечивает активного игрока (isActive).
